@@ -1,1 +1,1 @@
-print("Yarrak")
+print("terbiyesiz")
