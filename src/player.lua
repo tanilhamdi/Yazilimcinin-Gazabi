@@ -1,14 +1,25 @@
-function love.load()
-	player = { x = 100, y = 100, speed = 200 }
+local Player = {}
+Player.__index = Player
+
+function Player.new(hp, speed, x, y, width, height)
+    local self = setmetatable({}, Player)
+    self.hp = hp
+    self.speed = speed
+    self.x = x
+    self.y = y
+    self.width = width
+    self.height = height
+    return self
 end
 
-function love.update(dt)
-	if love.keyboard.isDown("right") then player.x = player.x + player.speed * dt end
-	if love.keyboard.isDown("left") then player.x = player.x - player.speed * dt end
-	if love.keyboard.isDown("down") then player.y = player.y + player.speed * dt end
-	if love.keyboard.isDown("up") then player.y = player.y - player.speed * dt end
+function Player:update(dt)
+    local kd = love.keyboard
+    if kd.isDown("d") then self.x = self.x + self.speed * dt end
+    if kd.isDown("a") then self.x = self.x - self.speed * dt end
 end
 
-function love.draw()
-	love.graphics.rectangle("fill", player.x, player.y, 32, 32)
+function Player:draw()
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
+
+return Player
