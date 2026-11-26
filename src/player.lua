@@ -18,6 +18,9 @@ function Player.new(hp, speed, x, y, width, height, jumpPower, gravity)
     return self
 end
 
+function shoot(b)
+	0
+end
 
 function Player:update(dt, ground)
     local kd = love.keyboard
@@ -35,6 +38,8 @@ function Player:update(dt, ground)
     if kd.isDown("w") and isGround == true then
         self.vy = -self.jumpPower
     end
+    --Bullet
+    if kd.isDown("space") then new 
 
 
     print("[DEBUG] isGround: " .. tostring(isGround))
