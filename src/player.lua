@@ -1,3 +1,4 @@
+
 local Player = {}
 Player.__index = Player
 
@@ -13,16 +14,19 @@ function Player.new(hp, speed, x, y, width, height, jumpPower, gravity)
     self.height = height
     self.jumpPower = jumpPower
     self.gravity = gravity
+    self.cooldownTime = 0.25
+    self.shootCooldown = 0
     self.vy = 0
 
     return self
 end
 
-function shoot(b)
-	0
+function Player:shoot(b)
+    return b.new(700, self.x, self.y,8,4)
 end
 
-function Player:update(dt, ground)
+
+function Player:update(dt, ground, bulletClass, bullets)
     local kd = love.keyboard
 
     local isGround = checkCollision(self, ground)
@@ -38,11 +42,21 @@ function Player:update(dt, ground)
     if kd.isDown("w") and isGround == true then
         self.vy = -self.jumpPower
     end
-    --Bullet
-    if kd.isDown("space") then new 
+
+    if self.shootCooldown > 0 then
+        self.shootCooldown = self.shootCooldown - dt
+    end
+
+    if kd.isDown("space") and self.shootCooldown <= 0 then
+        self.shootCooldown = self.cooldownTime;
+        local newBullet = self:shoot(bulletClass)
+        table.insert(bullets, newBullet)
+    end
 
 
-    print("[DEBUG] isGround: " .. tostring(isGround))
+
+
+    --print("[DEBUG] isGround: " .. tostring(isGround))
 
     --Gravity Force
     self.vy = self.vy + self.gravity * dt
