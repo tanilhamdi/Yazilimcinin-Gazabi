@@ -22,7 +22,7 @@ function Player.new(hp, speed, x, y, width, height, jumpPower, gravity)
 end
 
 function Player:shoot(b)
-    return b.new(700, self.x, self.y,8,4)
+    return b.new(700, self.x + self.width, self.y + self.height / 2,8,4)
 end
 
 
